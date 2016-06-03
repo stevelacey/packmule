@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block jumbotron %}
+  <h1 class="display-3">Shipping items via travellers</h1>
+  <p>Send and receive items you can't get where you are and earn some cash with your spare bag space.</p>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Find a mule</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-primary btn-lg" href="{{ url('find') }}" role="button">Find a mule</a></p>
+      </div>
+      <div class="col-md-4">
+        <h2>Become a mule</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-primary btn-lg" href="{{ url('become') }}" role="button">Become a mule</a></p>
+      </div>
+      <div class="col-md-4" style="padding: 1rem 0; text-align: center;">
+        <img src="/images/donnnkey.png" style="width: 240px;">
+      </div>
+    </div>
+{% endblock %}

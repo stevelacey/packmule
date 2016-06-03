@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block jumbotron %}
+  <i class="fa fa-plane pull-xs-right" style="font-size: 10rem;" aria-hidden="true"></i>
+  <h1 class="display-3">Make money with the spare space in your bag</h1>
+  <p>Travelling light and want some extra cash? Help someone out who's looking for a home comfort on the road.</p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Become a mule</a></p>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <h3>How much space do you have in your bag?</h3>
+      <p>We'll only match you with travellers who have stuff that'll fit in your bag.</p>
+
+      <style>
+      .sugar {
+        display: inline-block;
+        margin-right: .5rem;
+      }
+      .sugar span {
+        display: table-cell;
+        width: 80px;
+        height: 100px;
+        padding: 4px;
+        border: 1px solid #ccc;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .sugars:hover .sugar span {
+        background: orange;
+        color: white;
+        cursor: pointer;
+      }
+      .sugar:hover ~ .sugar span {
+        background: white;
+        color: black;
+      }
+      </style>
+
+      <div class="sugars">
+        <div class="sugar"><span>1 bag of a sugar</span></div>
+        <div class="sugar"><span>2 bags of a sugar</span></div>
+        <div class="sugar"><span>3 bags of a sugar</span></div>
+        <div class="sugar"><span>4 bags of a sugar</span></div>
+        <div class="sugar"><span>5 bags of a sugar</span></div>
+        <div class="sugar"><span>6 bags of a sugar</span></div>
+        <div class="sugar"><span>7 bags of a sugar</span></div>
+        <div class="sugar"><span>8 bags of a sugar</span></div>
+        <div class="sugar"><span>9 bags of a sugar</span></div>
+        <div class="sugar"><span>I have a yacht</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Are you interested in checking an extra bag?</h3>
+      <p>You can earn commissions in excess of $100 for bringing along an extra bag - airport security will be totally cool with it.</p>
+
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Yes
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> No
+      </label>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>What is your travel itinerary?</h3>
+      <p>We'll use your itinerary to match you with travellers who need things where you're going.</p>
+    </div>
+    <div class="col-md-8">
+      <img src="/images/itinerary.png" style="width: 100%;">
+    </div>
+    <div class="col-md-4">
+      <h4 style="margin-bottom: 1rem;">Import your itinerary</h4>
+      <button type="submit" class="btn btn-primary">Import NomadTrips</button>
+      <button type="submit" class="btn btn-primary">Import TripIt</button>
+
+      <br><br>
+
+      <h4 style="margin-bottom: 1rem;">or enter when you're travelling</h4>
+      <div class="row">
+        <div class="col-md-5">
+          <fieldset class="form-group">
+            <input class="form-control" id="fromcty" placeholder="France">
+          </fieldset>
+        </div>
+        <div class="col-md-2" style="padding: 4px; text-align: center;">
+        to
+        </div>
+        <div class="col-md-5">
+          <fieldset class="form-group">
+            <input class="form-control" id="tocty" placeholder="Switzerland">
+          </fieldset>
+        </div>
+      </div>
+      <img src="/images/calendar.png" style="max-width: 100%;">
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>What insurance cover do you have?</h3>
+      <p>If you have any spare, you'll rank higher in search results - but don't worry if not, we can provide cover for mules that don't.</p>
+
+      <br>
+      <br>
+
+      <div style="text-align: center"><strong>Up to £2000</strong></div>
+
+      <br>
+
+      <progress class="progress" value="75" max="100">75%</progress>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <div style="text-align: center;">
+    <button type="submit" class="btn btn-primary btn-lg">Sign up to become a mule!</button>
+  </div>
+
+  <br>
+  <br>
+  <br>
+{% endblock %}
