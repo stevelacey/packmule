@@ -1,8 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+  Find a mule
+{% endblock %}
+
+{% block description %}
+  Save money shipping via travellers
+{% endblock %}
+
 {% block jumbotron %}
   <i class="fa fa-money pull-xs-right" style="font-size: 10rem;" aria-hidden="true"></i>
-  <h1 class="display-3">Save money shipping via travellers</h1>
+  <h1 class="display-3">{{ block('description') }}</h1>
   <p>iPhone stolen whilst you're in Guatamala? Ship it to someone in the US who's heading your way next week.</p>
   <p><a class="btn btn-primary btn-lg" href="#" role="button">Find a mule</a></p>
 {% endblock %}

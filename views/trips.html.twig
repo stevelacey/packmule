@@ -1,0 +1,195 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Trips
+{% endblock %}
+
+{% block hero %}
+  <div class="jumbotron bg-inverse" style="margin: 0;">
+    <div class="container">
+      <h1>Find a nomad heading your way and drop them a line &mdash; a Packmule experiment</h1>
+    </div>
+  </div>
+
+  <div id="map"></div>
+
+  <style>
+    .jumbotron {
+      padding: 1rem;
+      text-align: center;
+    }
+    .jumbotron h1 {
+      font-size: 1rem;
+      margin: 0;
+    }
+    #map {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 2rem;
+      background: rgb(179, 209, 255);
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-4">
+      <form action="{{ url('trips') }}" method="get">
+        <div class="row">
+          <div class="col-md-6">
+            <fieldset class="form-group">
+              {{ form_label(form.from)}}
+              {{ form_widget(form.from, {'attr': {'class': 'form-control'}}) }}
+            </fieldset>
+          </div>
+          <div class="col-md-6">
+            <fieldset class="form-group">
+              {{ form_label(form.to)}}
+              {{ form_widget(form.to, {'attr': {'class': 'form-control'}}) }}
+            </fieldset>
+          </div>
+          <style>
+            .form-control {
+              height: 2rem;
+            }
+          </style>
+        </div>
+
+        <br>
+
+        <button type="submit" class="btn btn-primary">Find a mule</button>
+      </form>
+    </div>
+
+    <div class="col-md-8">
+      {% for trip in trips %}
+        <div
+          id="trip_{{ trip.id }}"
+          class="trip row row--striped"
+          data-from="{{ trip.from_city }}, {{ trip.from_country }}"
+          data-from-latitude="{{ trip.from_latitude }}"
+          data-from-longitude="{{ trip.from_longitude }}"
+          data-to="{{ trip.to_city }}, {{ trip.to_country }}"
+          data-to-latitude="{{ trip.to_latitude }}"
+          data-to-longitude="{{ trip.to_longitude }}"
+          style="padding: .5rem 0;"
+        >
+          <div class="col-xs-3">
+            <strong>
+              <a href="{{ trip.url }}">
+                {{ trip.username }}
+              </a>
+            </strong>
+          </div>
+          <div class="col-xs-3">
+            {% if trip.from_country %}
+              {{ trip.from_city }}, {{ trip.from_country }}
+              <br><small>🛫&nbsp;&nbsp;{{ trip.departure }}</small>
+            {% endif %}
+          </div>
+          <div class="col-xs-1">
+            &mdash;
+          </div>
+          <div class="col-xs-3">
+            {% if trip.to_country %}
+              {{ trip.to_city }}, {{ trip.to_country }}
+              <br><small>🛬&nbsp;&nbsp;{{ trip.arrival }}</small>
+            {% endif %}
+          </div>
+          <div class="col-xs-2">
+            <a href="{{ trip.url }}" class="btn btn-secondary btn-sm">
+              <i class="fa fa-envelope-o"></i>
+              <span class="hidden-lg-down">Message</span>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+
+      <style>
+        .btn-sm {
+          margin: .5rem 0;
+        }
+        .row--striped:nth-child(2n) {
+          background: #fbfbfb;
+        }
+        .trip--highlight {
+          background: #ffdb44 !important;
+        }
+      </style>
+    </div>
+  </div>
+
+  <script>
+    var tripClasses = 'trip row row--striped';
+    var tripHighlightedClasses = 'trip trip--highlight row row--striped';
+
+    if (window.location.hash) {
+      var trip = document.getElementById(window.location.hash.substr(1));
+      if (trip) trip.className = tripHighlightedClasses;
+    }
+
+    function initMap() {
+      var geocoder = new google.maps.Geocoder();
+      var map = new google.maps.Map(document.getElementById('map'), {
+        scrollwheel: false,
+        zoom: 3
+      });
+
+      geocoder.geocode({'address': document.getElementById('to').value || document.getElementById('from').value || 'Europe'}, function(results, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          map.setCenter(results[0].geometry.location);
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+
+      var trips = document.getElementsByClassName('trip');
+
+      for (var i = 0; i < trips.length; i++) {
+        var trip = trips[i];
+
+        var from = trip.attributes['data-from'].textContent;
+        var to = trip.attributes['data-to'].textContent;
+
+        var from_lat = parseFloat(trip.attributes['data-from-latitude'].textContent);
+        var from_lng = parseFloat(trip.attributes['data-from-longitude'].textContent);
+        var to_lat   = parseFloat(trip.attributes['data-to-latitude'].textContent);
+        var to_lng   = parseFloat(trip.attributes['data-to-longitude'].textContent);
+
+        var polyline = new google.maps.Polyline({
+          path: [
+            {lat: from_lat, lng: from_lng},
+            {lat: to_lat, lng: to_lng},
+          ],
+          geodesic: true,
+          strokeColor: '#000000',
+          strokeOpacity: .75,
+          strokeWeight: 4,
+          icons: [{
+            icon: {
+              path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+            },
+            offset: '100%'
+          }],
+        });
+
+        (function (trip) {
+          google.maps.event.addListener(polyline, 'click', function(e) {
+              var highlights = document.getElementsByClassName('trip--highlight');
+              for (var j = 0; j < highlights.length; j++) {
+                highlights[j].className = tripClasses
+              }
+
+              trip.className = tripHighlightedClasses
+
+              window.location.hash = '#' + trip.id;
+          });
+        })(trip);
+
+        polyline.setMap(map);
+      }
+    }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADKwnL9ywTj4s-uAzeuYxu65bnSm4oC08&amp;callback=initMap" async defer></script>
+{% endblock %}

@@ -1,8 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+  Become a mule
+{% endblock %}
+
+{% block description %}
+  Make money with the spare space in your bag
+{% endblock %}
+
 {% block jumbotron %}
   <i class="fa fa-plane pull-xs-right" style="font-size: 10rem;" aria-hidden="true"></i>
-  <h1 class="display-3">Make money with the spare space in your bag</h1>
+  <h1 class="display-3">{{ block('description') }}</h1>
   <p>Travelling light and want some extra cash? Help someone out who's looking for a home comfort on the road.</p>
   <p><a class="btn btn-primary btn-lg" href="#" role="button">Become a mule</a></p>
 {% endblock %}
